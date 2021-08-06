@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(x,y,z,r,r9,n)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        //Задача 4
+        /*
+        var c=circle([x,y,z],r);
+        c.focus=[1,0,0];
+        c.mode=Suica.POINT;
+        var c=circle([x,y+2*r,z],r);
+        c.focus=[1,0,0];
+        c.mode=Suica.LINE;
+        var c=circle([x,y+4*r,z],r);
+        c.focus=[1,0,0];
+        c.mode=Suica.SOLID;
+        */
+
+        //Задача 5а
+        /*
+        cr=r;
+        for(var i=0;i<n;i++)
+        {
+          var c=circle([x,y,z],cr);
+          c.focus=[1,0,0];
+          c.mode=Suica.LINE;
+          cr=cr-r/n;
+        }
+        */
+
+        //Задача 5б
+        /*
+        var c=circle([x,y,z],r);
+        //c.focus=[1,0,0];
+        c.mode=Suica.LINE;
+        var c=circle([x,y,z],r/2);
+        //c.focus=[1,0,0];
+        c.mode=Suica.LINE;
+        randR=random(0,3*r);
+        //var c=circle([x,y+randR+r,z],randR);
+        alpha=random(0,2*Math.PI);
+        var c=circle([x+(randR+r)*Math.cos(alpha),y+(randR+r)*Math.sin(alpha),z],randR);
+        //c.focus=[1,0,0];
+        c.mode=Suica.LINE;
+        */
+
+
+        //Задача 6
+        /*
+        for(var i=0;i<n;i++)
+        {
+          var lRad = Math.sqrt(2)*r*Math.sqrt(1-Math.cos(2*Math.PI/n))/2;
+          var c=circle([x+r*Math.cos(2*Math.PI*i/n),y+r*Math.sin(2*Math.PI*i/n),z],lRad);
+          //c.mode=Suica.LINE;
+        }
+        */
+        //Задача 7
+        /*
+        for(var i=0;i<n;i++)
+        {
+          var c=circle([x+r*Math.cos(2*Math.PI*i/n),y+r*Math.sin(2*Math.PI*i/n),z],1.5*r);
+          c.mode=Suica.LINE;
+        }
+        */
+
+        //Задача 8
+        /*
+        var c=circle([x,y,z],r);
+        c.mode=Suica.LINE;
+        c.color=[0,0,0];
+        c.focus=[1,0,0];
+
+        var c=circle([x,y+2.2*r,z],r);
+        c.mode=Suica.LINE;
+        c.color=[0,0,1];
+        c.focus=[1,0,0];
+
+        var c=circle([x,y-2.2*r,z],r);
+        c.mode=Suica.LINE;
+        c.color=[1,0,0];
+        c.focus=[1,0,0];
+
+        var c=circle([x,y-1.1*r,z-1.1*r],r);
+        c.mode=Suica.LINE;
+        c.color=[1,1,0];
+        c.focus=[1,0,0];
+
+        var c=circle([x,y+1.1*r,z-1.1*r],r);
+        c.mode=Suica.LINE;
+        c.color=[0,1,0];
+        c.focus=[1,0,0];
+        */
+
+
+        //Задача 9
+        /**/
+        var mr=Math.min(r,r9);
+        for(var i=0;i<n;i++)
+        {
+          var c=ellipse([x+mr*Math.cos(2*Math.PI*i/n),y+mr*Math.sin(2*Math.PI*i/n),z],[r,r9]);
+          c.mode=Suica.LINE;
+        }
+      }
+    </script>
+  </head>
+  <body onload="main(5,5,-2.5,5,4,4)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

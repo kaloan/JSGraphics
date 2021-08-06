@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main()
+      {
+        p=new Suica();
+        demo();
+
+        xc=0;
+        yc=5;
+        zc=10;
+
+        RPlanet=10;
+        RMoon=3;
+
+        rPlanet=25;
+        rMoon=RPlanet+RMoon+5;
+
+        coeff=0.5;
+        coeff2=0.2;
+
+        a=random(0, 2*Math.PI);
+        b=random(0, 2*Math.PI);
+
+
+        pCircle = circle([xc, yc, zc], rPlanet).custom({mode: Suica.LINE, color: [0,1,0]});
+        planet=sphere([xc+rPlanet*Math.cos(a),yc+rPlanet*Math.sin(a),zc],RPlanet).custom({color: [1,0,0]});
+        mCircle = circle([planet.center[0], planet.center[1], planet.center[2]], rMoon).custom({mode: Suica.LINE, color: [0,1,0]});
+        moon=sphere([planet.center[0]+rMoon*Math.cos(a), planet.center[1]+rMoon*Math.sin(a), planet.center[2]], RMoon).custom({color: [0,0,1]});
+
+
+        p.nextFrame=drawFrame;
+      }
+      function drawFrame()
+      {
+        phi=coeff*Suica.dTime*Math.PI;
+        psi=coeff2*Suica.dTime*Math.PI;
+
+        planet.center=[xc+rPlanet*Math.cos(a), yc+rPlanet*Math.sin(a), zc];
+        moon.center=[planet.center[0]+rMoon*Math.cos(b), planet.center[1]+rMoon*Math.sin(b),  planet.center[2]];
+        mCircle.center=planet.center;
+
+        a+=phi;
+        b-=psi;
+      }
+    </script>
+  </head>
+  <body onload="main()">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

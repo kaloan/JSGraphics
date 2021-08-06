@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(x,y,z,m)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        var r=random(2.5,4);
+        var h=random(6,10);
+        var rStub=random(0.6,1);
+        var hStub=random(2,3.2);
+        var n=Math.floor(random(5,15));
+        var p=pyramid([x,y,z+hStub],r,h,n).custom({color: [random(0.05,0.2),random(0.7,1),random(0,0.1)]});
+        var c=cylinder([x,y,z],rStub,hStub).custom({color: [random(0.2,0.4),random(0.1,0.3),0]});
+
+        for(var i=0;i<m;i++)
+        {
+          var g=group([p,c]).custom({center:[x,y+i*9,z]});
+        }
+      }
+    </script>
+  </head>
+  <body onload="main(10,5,-2.5,15)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

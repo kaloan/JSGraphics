@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(r)
+      {
+        p=new Suica();
+        demo();
+        oxyz();
+
+
+        s=sphere([0,0,0],r).custom({color: [random(0.1,0.2),random(0.6,0.7),random(0,1)]});
+        p.nextFrame=drawFrame;
+      }
+      function drawFrame()
+      {
+        var v=2+Math.abs(s.center[2]-10);
+        s.center[2]+=v*Suica.dTime;
+      }
+    </script>
+  </head>
+  <body onload="main(10)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(x,y,z,r,h,r17,n)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        //Задача 10
+        /*
+        var p=sphere([x,y,z],r,n);
+        p.mode=Suica.POINT;
+        var p=sphere([x,y+2*r,z],r,n);
+        p.mode=Suica.LINE;
+        var p=sphere([x,y+4*r,z],r,n);
+        p.mode=Suica.SOLID;
+        */
+
+
+        //Задача 11
+        /*
+        for(var i=0;i<n;i++)
+        {
+          var lRad = Math.sqrt(2)*r*Math.sqrt(1-Math.cos(2*Math.PI/n))/2;
+          var c=sphere([x,y+r*Math.cos(2*Math.PI*i/n),z+r*Math.sin(2*Math.PI*i/n)],lRad);
+          c.mode=Suica.SOLID;
+          if(i%2) c.color=[0.6,0.1,0.35];
+        }
+        */
+
+
+        //Задача 12
+        /*
+        var c=sphere([x,y,z],r);
+        c.focus=[1,0,0];
+        c.color=[1,1,0];
+        for(var i=0;i<n;i++)
+        {
+          c=sphere([x,y+r*Math.cos(2*Math.PI*i/n),z+r*Math.sin(2*Math.PI*i/n)],0.9*r);
+          c.mode=Suica.SOLID;
+          //if(i%2) c.color=[0.6,0.1,0.35];
+        }
+        */
+
+
+        //Задача 13
+        /*
+        for(var i=0;i<n;i++)
+        {
+          var p=prism([x,y+2*i*r,z],r,h,3+i);
+          //p.focus=[1,0,0];
+          p.color=[random(0,1),random(0,1),random(0,1)];
+        }
+        */
+
+
+        //Задача 14
+        /*
+        for(var i=0;i<n;i++)
+        {
+          var p=pyramid([x,y+2*i*r,z],r,h,3+i);
+          //p.focus=[1,0,0];
+          p.color=[random(0,1),random(0,1),random(0,1)];
+        }
+        */
+
+        //Задача 15
+        /*
+        var c=cylinder([x,y,z],r,h);
+        c.mode=Suica.SOLID;
+
+        var c=cylinder([x,y+2*r,z],r,h);
+        c.mode=Suica.LINE;
+        */
+
+        //Задача 16
+        /*
+        var c=cone([x,y,z],r,h);
+        c.mode=Suica.SOLID;
+
+        var c=cone([x,y+2*r,z],r,h);
+        c.mode=Suica.LINE;
+        */
+
+        //Задача 17
+        /*
+        */
+        var c=cylindroid([x,y,z],[r,r17],h);
+        c.mode=Suica.SOLID;
+
+        var c=cylindroid([x,y+2*r17,z],[r,r17],h);
+        c.mode=Suica.LINE;
+
+        var c=conoid([x,y+4*r17,z],[r,r17],h);
+        c.mode=Suica.SOLID;
+
+        var c=conoid([x,y+6*r17,z],[r,r17],h);
+        c.mode=Suica.LINE;
+      }
+    </script>
+  </head>
+  <body onload="main(5,5,-2.5,3,12,5,6)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

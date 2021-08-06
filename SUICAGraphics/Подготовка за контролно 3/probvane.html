@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 1</title>
+		<script src="suica.min.js"></script>
+
+		<script>
+			function main()
+			{
+				suic=new Suica();
+
+				s=sphere([0,0,0],3);
+				p=sphere(sameAs(s.center),3).custom({color: [1,0.5,0.7]});
+				t=5;
+				v=[0,0,1];
+
+				suic.nextFrame=anim;
+			}
+			function anim()
+			{
+				if (Suica.time<=t)
+				for (var i=0; i<3; i++)
+					s.center[i] += 4*v[i]*Suica.dTime/t;
+			}
+		</script>
+
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main()
+      {
+        p = new Suica();
+
+        //Задача3
+        /*
+        h=10;
+        r=3;
+        c=cylinder([random(-10,10),random(-10,10),random(-10,10)],r,h);
+        lookAt([c.center[0], c.center[1], c.center[2]+h+3*2*r], c.center, [1, 0, 0]);
+        */
+
+        //Задача4
+        stubH=18;
+        stubR=2;
+        coronaR=7;
+
+        corona=sphere([random(-10,10),random(-10,10),random(-10,10)],coronaR).custom({color:[0,0.75,0]});
+        stub=cylinder([corona.center[0],corona.center[1],corona.center[2]-0.5*coronaR-stubH],stubR,stubH).custom({color:[0.75,0.3,0]});
+
+        lookAt([corona.center[0], corona.center[1], corona.center[2]+3*2*coronaR], corona.center, [1, 0, 0]);
+        //lookAt([stub.center[0], stub.center[1], stub.center[2]-3*stubH-3*2*coronaR-3*2*stubR], stub.center, [1, 0, 0]);
+
+
+        speedCoeff=5;
+      }
+    </script>
+  </head>
+  <body onload="main()">
+    <canvas id="canvas" width="1200" height="600" style="border: solid 3px black"></canvas>
+  </body>
+</html>

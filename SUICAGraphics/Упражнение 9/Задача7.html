@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Упр9-Зад6</title>
+    <script src="suica.min.js"></script>
+    <script>
+      function main(n)
+      {
+        new Suica();
+        oxyz();
+        demo();
+
+        var a;
+        a=point([-n/2, -n/2, -n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([n/2, -n/2, -n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([-n/2, n/2, -n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([n/2, n/2, -n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+
+        a=point([-n/2, -n/2, n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([n/2, -n/2, n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([-n/2, n/2, n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+
+        a=point([n/2, n/2, n/2]);
+        a.pointSize=15;
+        a.color=[Math.random(),Math.random(),Math.random()];
+      }
+    </script>
+    <style media="screen">
+      canvas
+      {
+        border: 3px solid Black;
+      }
+    </style>
+  </head>
+  <body onload="main(15)">
+    <canvas width="1200px" height="600px"> НЕ СЕ ПОДДЪРЖА! </canvas>
+  </body>
+</html>

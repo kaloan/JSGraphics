@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(x,y,z,r,m)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        //Задача 3
+        cr=r;
+        for(var i=1;i<=m;i++)
+        {
+          var p=polygon([x,y,z],cr,3);
+          p.focus=[1,0,0];
+          p.mode=Suica.LINE;
+          p.spin=(Math.PI/3)*i;
+          cr=cr/2;
+        }
+
+      }
+    </script>
+  </head>
+  <body onload="main(5,5,-2.5,10,6)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

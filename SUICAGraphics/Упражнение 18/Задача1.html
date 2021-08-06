@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 1</title>
+		<script src="suica.min.js"></script>
+		
+		<script>
+			function main()
+			{
+				suic=new Suica();
+
+				orthographic(-1000,1000);
+				lookAt([0,0,100],[0,0,0],[0,1,0]);
+				
+				c=circle([0,0,0],random(25,75)).custom({mode: Suica.LINE});
+				
+				ang=random(0,2*Math.PI);
+				cp=point([c.center[0]+c.radius*Math.cos(ang),c.center[1]+c.radius*Math.sin(ang),c.center[2]]).custom({interactive: true, pointSize: 15});
+				
+				seg=segment(c.center,cp.center);
+				suic.gl.canvas.addEventListener('mousedown',mouseDown);
+				suic.gl.canvas.addEventListener('mousemove',mouseMove);
+				suic.gl.canvas.addEventListener('mouseup',mouseUp);
+				
+			}
+			
+			function mouseDown(event)
+			{
+
+				obj=suic.objectAtPoint(event.clientX,event.clientY);
+			}
+			function mouseMove(event)
+			{
+				if(obj===cp)
+				{	
+					x=event.clientX-event.target.offsetLeft-event.target.offsetWidth/2;
+					y=-(event.clientY-event.target.offsetTop-event.target.offsetHeight/2);
+					var d=Math.sqrt(x*x+y*y);
+					obj.center[0]=c.radius*x/d;
+					obj.center[1]=c.radius*y/d;
+					sp=0;
+					//seg.to=obj.center;
+					//segment(c.center,obj.center);
+				}
+				x=event.clientX;
+				y=event.clientY;
+			}
+			function mouseUp(event)
+			{
+				obj=null;
+			}
+			
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>

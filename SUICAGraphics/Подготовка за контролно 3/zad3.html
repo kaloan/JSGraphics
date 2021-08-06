@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 1</title>
+		<script src="suica.min.js"></script>
+		
+		<script>
+			function main()
+			{
+				suic=new Suica();
+				k=0.4;
+				R=10;
+				c=cube([0,0,0],R).custom({mode: Suica.LINE});
+				
+				end1=[0.5*R,-0.5*R,-0.5*R];
+				end2=[-0.5*R,0.5*R,0.5*R];
+				s=sphere(end1,0.2*R);
+				segment(end1,end2);
+				
+				suic.nextFrame=anim;
+			}
+			function anim()
+			{
+				l=1/2*Math.cos(k*Suica.time)+1/2;
+				s.center=[end1[0]*l+end2[0]*(1-l),end1[1]*l+end2[1]*(1-l),end1[2]*l+end2[2]*(1-l)];
+				//s.center=[end1[0]*l+(end2[0]-end1[0])*Math.cos(k*Suica.dTime),end1[1]+(end2[1]-end1[1])*Math.cos(k*Suica.dTime),end1[2]+(end2[2]-end1[2])*Math.cos(k*Suica.dTime)];
+			}
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>

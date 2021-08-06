@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(r,n)
+      {
+        p=new Suica();
+        demo();
+        oxyz();
+
+
+        s1=sphere([random(-20,20),random(-20,20),random(-20,20)],r).custom({color: [1,0,0]});
+        s2=sphere([random(-20,20),random(-20,20),random(-20,20)],1.5*r).custom({color: [0,1,0]});
+        v=vectorPoints(s1.center,s2.center);
+        t=n;
+        p.nextFrame=drawFrame;
+      }
+      function drawFrame()
+      {
+        //s.center[2]+=v*Suica.dTime;
+        var dist=0;
+        var d=vectorPoints(s1.center,s2.center);
+        for(var i=0;i<3;i++)
+        {
+          dist+=d[i]*d[i];
+        }
+        dist=Math.pow(dist,1/2);
+        if(dist>=0.2*s1.radius)
+        {
+          for(var i=0;i<3;i++)
+          {
+            s2.center[i]+=v[i]*Suica.dTime/t;
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="main(5,30)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

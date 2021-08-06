@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Упр9-Зад13</title>
+    <script src="suica.min.js"></script>
+    <script>
+      function main(n,r,x,y,z)
+      {
+        new Suica();
+        oxyz();
+        demo();
+
+        var alpha = random(0,2*Math.PI);
+        var beta =  random(alpha,alpha+Math.PI);
+        for(var i=0;i<n;i++)
+        {
+          /*
+          var alpha=random(0,2*Math.PI);
+          var beta=random(0,2*Math.PI);
+          segment([x + r*Math.cos(alpha), y + r*Math.sin(alpha), z], [x + r*Math.cos(beta), y + r*Math.sin(beta), z]);
+          */
+          var iter=random(0,2*Math.PI);
+          segment([x + r*Math.cos(alpha+iter), y + r*Math.sin(alpha+iter), z], [x + r*Math.cos(beta+iter), y + r*Math.sin(beta+iter), z]);
+        }
+
+      }
+    </script>
+    <style media="screen">
+      canvas
+      {
+        border: 3px solid Black;
+      }
+    </style>
+  </head>
+  <body onload="main(50,10,3,15,5)">
+    <canvas width="1200px" height="600px"> НЕ СЕ ПОДДЪРЖА! </canvas>
+  </body>
+</html>

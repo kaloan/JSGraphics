@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(n,x,y,z,a)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        //Задача 7
+        /*
+        var c=cube([x,y,z],a);
+        c.color = [Math.random(),Math.random(),Math.random()];
+        */
+
+        //Задача 8 и 9
+        /*
+        var xdiff=0;
+        for(var i=n;i>0;i--)
+        {
+          for(var j=0;j<i;j++)
+          {
+            var c=cube([x+j*a+xdiff,y,z+(n-i)*a],a);
+            c.color = [Math.random(),Math.random(),Math.random()];
+          }
+          xdiff+=a/2;
+        }
+
+        for(var i=n;i>0;i--)
+        {
+          for(var j=0;j<i;j++)
+          {
+            var c=cube([x+j*a+a/2*(n-i),y,z+(n-i)*a],a);
+            c.color = [Math.random(),Math.random(),Math.random()];
+          }
+        }
+        */
+
+        //Задача 10
+        for(var i=0;i<n;i++)
+        {
+          for(var j=0;j<n;j++)
+          {
+            var c=cube([x+j*a,y+i*a,z],a);
+            c.color = [(i+j+1)%2,(i+j+1)%2,(i+j+1)%2];
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="main(10,5,2,-4,5)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

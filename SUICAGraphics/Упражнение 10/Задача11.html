@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(x,y,z,a,b,c,n,m)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+        //Задача 11
+      /*
+      var p;
+			p = cuboid([x,y+2*b+10,z],[a,b,c]);
+			p.color = [random(0,1),random(0,1),random(0,1)];
+			p.mode = Suica.POINT;
+
+			p = cuboid([x,y+b+5,z],[a,b,c]);
+			p.color = [random(0,1),random(0,1),random(0,1)];
+			p.mode = Suica.LINE;
+
+			p = cuboid([x,y,z],[a,b,c]);
+			p.color = [random(0,1),random(0,1),random(0,1)];
+      */
+
+      //Задача 12
+      for(var i=0;i<m;i++)
+      {
+        if(i%2==1)
+        {
+          var p=cuboid([x,y-b/4,z+i*c],[a,b/2,c]);
+          p.color=[Math.random(),0,0];
+          //i%2*b/2
+        }
+        else
+        {
+          p=cuboid([x,y+n*b-b/4,z+i*c],[a,b/2,c]);
+          p.color=[Math.random(),0,0];
+        }
+        for(var j=0;j<n;j++)
+        {
+          var p=cuboid([x,y+j*b+i%2*b/2,z+i*c],[a,b,c]);
+          p.color=[Math.random(),0,0];
+        }
+      }
+      }
+    </script>
+  </head>
+  <body onload="main(5,2,5,2,4,2,10,6)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

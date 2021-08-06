@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main()
+      {
+        p = new Suica();
+        orthographic(-200, 200);
+        lookAt([0, 0, 10], [0, 0, 0], [0, 1, 0]);
+
+        p.gl.canvas.addEventListener('mousedown', mouseDown);
+        p.gl.canvas.addEventListener('contextmenu', blockContextMenu);
+
+        lastpos = 0;
+        lastpos2 = 0;
+        count=0;
+
+        //Пълен граф с n върха
+        n=9;
+        oldPositions = Array(n);
+        count=0;
+      }
+      function blockContextMenu(event)
+      {
+        event.preventDefault();
+      }
+      function mouseXY(event)
+      {
+        x = event.clientX - event.target.offsetLeft - event.target.offsetWidth/2;
+        y = -( event.clientY - event.target.offsetTop - event.target.offsetHeight/2 );
+        return [x, y, 0];
+      }
+
+      //Задача3 за отсечки към предишни n точки - n graph
+      /*
+      function mouseDown(event)
+      {
+        point(mouseXY(event)).custom({pointSize: 12, color: [1,0,0]});
+        for(var i=n-1; i>=0; i--)
+        {
+          if(count%n>=n-i) segment(oldPositions[i], mouseXY(event));
+        }
+        oldPositions.shift();
+        oldPositions.push(mouseXY(event));
+        ++count;
+      }
+      */
+
+      //Стандартна
+
+      function mouseDown(event)
+      {
+        point(mouseXY(event)).custom({pointSize: 12, color: [1,0,0]});
+        if(count%3!=0)
+        {
+          segment(lastpos,mouseXY(event));
+          if(count%3!=1) segment(lastpos2,mouseXY(event));
+        }
+        lastpos2=lastpos;
+        lastpos=mouseXY(event);
+        ++count;
+      }
+
+
+      //Задача2
+      /*
+      function mouseDown(event)
+      {
+        point(mouseXY(event)).custom({pointSize: 12, color: [1,0,0]});
+        if(count!=0) segment(lastpos,mouseXY(event));
+        lastpos=mouseXY(event);
+        ++count;
+      }
+      */
+    </script>
+  </head>
+  <body onload="main()">
+    <canvas id="canvas" width="1200" height="600" style="border: solid 3px black"></canvas>
+  </body>
+</html>

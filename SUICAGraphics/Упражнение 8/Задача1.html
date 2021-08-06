@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SUICA</title>
+    <script src="suica.min.js"></script>
+    <script>
+      function main()
+      {
+        new Suica();
+        //background([0.95,0.45,0.0]);
+
+        oxyz();
+
+        demo();
+        //demo(200,2,2);
+
+        console.log(Suica.version);
+      }
+    </script>
+    <style media="screen">
+      canvas{
+        border: solid 1px Black;
+      }
+    </style>
+  </head>
+  <body onload="main()">
+    <canvas width="1200px" height="600px"> НЕ СЕ ПОДДЪРЖА!</canvas>
+
+  </body>
+</html>

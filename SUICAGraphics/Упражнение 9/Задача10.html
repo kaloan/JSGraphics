@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Упр9-Зад6</title>
+    <script src="suica.min.js"></script>
+    <script>
+      function main(n,r,x,y,z)
+      {
+        new Suica();
+        oxyz();
+        demo();
+
+        var a;
+        for(var i=0;i<n;i++)
+        {
+          //По цялата сфера
+
+          alpha=random(0,2*Math.PI);
+          beta=random(-Math.PI/2,Math.PI/2);
+
+
+          //Дупка надолу
+          /*
+          alpha=random(0,2*Math.PI);
+          beta=random(0,Math.PI/2);
+          */
+
+          //Дупка нагоре
+          /*
+          alpha=random(0,2*Math.PI);
+          beta=random(-Math.PI/2,0);
+          */
+
+          //Дупка встрани
+          /*
+          alpha=random(-Math.PI/2,Math.PI/2);
+          beta=random(-Math.PI/2,Math.PI/2);
+          */
+
+          //Една четвърт
+          /*
+          alpha=random(-Math.PI/2,Math.PI/2);
+          beta=random(0,Math.PI/2);
+          */
+
+          //Една шеста
+          /*
+          alpha=random(0,1/6*2*Math.PI);
+          beta=random(-Math.PI/2,Math.PI/2);
+          */
+
+
+          a=point([x+r*Math.cos(alpha)*Math.cos(beta), y+r*Math.sin(alpha)*Math.cos(beta), z+r*Math.sin(beta)]);
+
+          a.pointSize=3;
+          a.color=[Math.random(),Math.random(),Math.random()];
+        }
+      }
+    </script>
+    <style media="screen">
+      canvas
+      {
+        border: 3px solid Black;
+      }
+    </style>
+  </head>
+  <body onload="main(5000,15,0,0,0)">
+    <canvas width="1200px" height="600px"> НЕ СЕ ПОДДЪРЖА! </canvas>
+  </body>
+</html>

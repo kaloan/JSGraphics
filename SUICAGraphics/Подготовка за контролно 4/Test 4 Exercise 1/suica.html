@@ -1,0 +1,263 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<title>T4-00</title>
+	<style media="screen">
+		button
+		{
+			display: inline-block;
+		}
+	</style>
+	<script src="suica.min.js"></script>
+
+	<script>
+		function main()
+		{
+			suic = new Suica();
+			//lookAt([16,8,6],[0,0,0],[0,0,1]);
+			demo(20);
+
+			// създаване на земята от 11х11 кубчета;
+			// централното кубче е в (0,0,-1)
+			for (var x=-5; x<=5; x++)
+			for (var y=-5; y<=5; y++)
+				cube([x,y,-1],0.9).custom({color:[1,0.8,0.5]});
+
+			// създаване на слонче като групов обект
+			slonche = group([
+				// крака и тяло
+				cube([0,0,0],1).custom({color:[0.8,0.8,0.8]}),
+				cube([0,0,1.3],1.8).custom({color:[0.8,0.8,0.8]}),
+				// опашка
+				cuboid([-1.1,0,0.5],[0.2,0.2,1]).custom({color:[0.8,0.8,0.8]}),
+				// очи
+				cylinder([0.8,0.25,1.5],0.2,0.2).custom({color:[1,1,1],focus:[1,0,0]}),
+				cylinder([0.8,-0.25,1.5],0.2,0.2).custom({color:[1,1,1],focus:[1,0,0]}),
+				sphere([0.9,0.25,1.5],0.15).custom({color:[0,0,0]}),
+				sphere([0.9,-0.25,1.5],0.15).custom({color:[0,0,0]}),
+				// уши
+				cuboid([0.4,1.7,1.3],[0.2,1.4,1.4]).custom({color:[0.8,0.8,0.8]}),
+				cuboid([0.4,-1.7,1.3],[0.2,1.4,1.4]).custom({color:[0.8,0.8,0.8]}),
+				cuboid([0.45,1.7,1.3],[0.2,1.1,1.1]).custom({color:[0.9,0.9,0.9]}),
+				cuboid([0.45,-1.7,1.3],[0.2,1.1,1.1]).custom({color:[0.9,0.9,0.9]}),
+				// бивни
+				cone([0.8,0.45,0.9],0.1,1).custom({color:[0.9,0.9,0.9],light:false,focus:[3,0,-1]}),
+				cone([0.8,-0.45,0.9],0.1,1).custom({color:[0.9,0.9,0.9],light:false,focus:[3,0,-1]}),
+				//хобот
+			]);
+			slonche.spin = 0;
+
+			trunk=group([
+				cuboid([0,0,0],[1.4,0.3,0.3]).custom({origin: [-0.5,0,0], color:[0.8,0.8,0.8]})
+			]);
+			//trunk.center = [0.8+0.7,0+0.15,0.9+0.15];
+			trunk.center = [0.8+0.15,0,0.9];
+			trunk.focus = [0,1,0];
+			slonche.add(trunk);
+
+			/*
+			trunk2=group([
+				cuboid([0,0,0],[0.4,0.3,0.3]).custom({color:[0.8,0.8,0.8]})
+			]);
+			//trunk.focus = [0,1,0];
+			trunk2.center = [0.8+0.15+0.3,0,0.9-1.4+0.15];
+			slonche.add(trunk2);
+			*/
+
+			trunk2=group([
+				cuboid([0,0,0],[0.4,0.3,0.3]).custom({color:[0.8,0.8,0.8]})
+			]);
+			trunk2.center = [1.25,0,0];
+			trunk2.origin = [-0.4,0,0];
+			trunk.add(trunk2);
+
+
+			// правим едно цветенце точно пред слончето
+			cvetence = group([
+				// стъбло
+				segment([0,0,0],[0,0,1]).custom({color:[0,1,0]}),
+				// тичинки
+				cube([0,0,1],0.2).custom({color:[1,1,0],light:false}),
+				// венчелистчета
+				cuboid([0,0,0.95],[0.2,0.6,0.2]).custom({color:[1,0,0]}),
+				cuboid([0,0,0.95],[0.6,0.2,0.2]).custom({color:[1,0,0]}),
+				// листа
+				cuboid([0,-0.14,0.4],[0.4,0.2,0.02]).custom({color:[0,1,0],focus:[0,1,1]}),
+				cuboid([0,0.14,0.4],[0.4,0.2,0.02]).custom({color:[0,1,0],focus:[0,-1,1]}),
+			]);
+			cvetence.center = [2,0,-0.5];
+
+			randomFlowers=10;
+			//sameAs(cvetence).custom({center: [2-5+0.9*Math.floor(random(0,10.99)),0-5+0.9*Math.floor(random(0,10.99)),-0.1+0.45-0.5]});
+			//sameAs(cvetence).custom({center: [cvetence.center[0]+Math.round(random(-5,5)),cvetence.center[1]+Math.round(random(-5,5)),cvetence.center[3]]});
+			for(var i=0;i<randomFlowers;i++)
+			{
+				novo_cvetence = sameAs(cvetence);
+				novo_cvetence.center = [Math.round(random(-5,5)),Math.round(random(-5,5)),-0.5];
+			}
+
+
+			flowerVisible=false;
+			slonCvete=sameAs(cvetence).custom({visible: flowerVisible});
+			slonCvete.center = [0,0,0];
+			slonCvete.focus = [0,-1,0];
+			trunk2.add(slonCvete);
+
+			trunkMove=false;
+			trunkTime=0;
+			jumping=false;
+
+			suic.nextFrame=animate;
+		}
+		function trunkActDeact()
+		{
+			trunkTime=Number(Suica.time);
+			trunkMove=!trunkMove;
+		}
+		function forward()
+		{
+
+			if(slonche.spin==0) slonche.center[0]++;
+			if(slonche.spin==Math.PI/2) slonche.center[1]--;
+			if(slonche.spin==Math.PI) slonche.center[0]--;
+			if(slonche.spin==3*Math.PI/2) slonche.center[1]++;
+
+			//Moже и по следния начин
+			/*
+			slonche.center[0]+=Math.cos(slonche.spin);
+			slonche.center[1]+=Math.sin(slonche.spin);
+			*/
+		}
+		function turn()
+		{
+			slonche.spin+=Math.PI/2;
+			if(slonche.spin==2*Math.PI) slonche.spin=0;
+			forward();
+		}
+		function jumpStart()
+		{
+			if(!jumping)
+			{
+				sCenter=sameAs(slonche.center);
+				xStart=Number(slonche.center[0]);
+				yStart=Number(slonche.center[1]);
+				tJump=1.5;
+				tPassed=0;
+				movePlanePos=3;
+				jumping=true;
+			}
+		}
+		function jump()
+		{
+			tPassed+=Suica.dTime;
+			if(tPassed<tJump)
+			{
+				document.getElementById("getDT").innerHTML=tPassed;
+				slonche.center[3]=Math.sin(tPassed*Math.PI/tJump);
+				if(slonche.spin==0) slonche.center[0]=movePlanePos*tPassed/tJump;
+				if(slonche.spin==Math.PI/2) slonche.center[1]=-movePlanePos*tPassed/tJump;
+				if(slonche.spin==Math.PI) slonche.center[0]=-movePlanePos*tPassed/tJump;
+				if(slonche.spin==3*Math.PI/2) slonche.center[1]=movePlanePos*tPassed/tJump;
+			}
+			else
+			{
+				suic.nextFrame=endJumpProper;
+			}
+		}
+		function endJumpProper()
+		{
+			if(slonche.spin==0) slonche.center[0]=xStart+movePlanePos;
+			if(slonche.spin==Math.PI/2) slonche.center[1]=yStart-movePlanePos;
+			if(slonche.spin==Math.PI) slonche.center[0]=xStart-movePlanePos;
+			if(slonche.spin==3*Math.PI/2) slonche.center[1]=yStart+movePlanePos;
+			slonche.center[3]=0;
+			suic.nextFrame=animate;
+		}
+
+		function flower()
+		{
+			flowerVisible=!flowerVisible;
+			slonCvete.visible=flowerVisible;
+		}
+		function animate()
+		{
+			if(trunkMove)
+			{
+				trunk.spin=(Math.cos(Math.PI+Suica.time-trunkTime)+1)*Math.PI/2;
+				trunk2.spin=-(Math.cos(Math.PI+Suica.time-trunkTime))*Math.PI/2;
+			}
+			else
+			{
+				trunk.spin=0;
+				trunk2.spin=Math.PI/2;
+				trunkMove=false;
+			}
+
+			if(jumping)
+			{
+				tPassed+=Suica.dTime;
+				if(tPassed<tJump)
+				{
+					//document.getElementById("getDT").innerHTML=tPassed;
+					slonche.center[2]=2*Math.sin(tPassed*Math.PI/tJump);
+					if(slonche.spin==0) slonche.center[0]=movePlanePos*tPassed/tJump;
+					if(slonche.spin==Math.PI/2) slonche.center[1]=-movePlanePos*tPassed/tJump;
+					if(slonche.spin==Math.PI) slonche.center[0]=-movePlanePos*tPassed/tJump;
+					if(slonche.spin==3*Math.PI/2) slonche.center[1]=movePlanePos*tPassed/tJump;
+				}
+				else
+				{
+					if(slonche.spin==0) slonche.center[0]=xStart+movePlanePos;
+					if(slonche.spin==Math.PI/2) slonche.center[1]=yStart-movePlanePos;
+					if(slonche.spin==Math.PI) slonche.center[0]=xStart-movePlanePos;
+					if(slonche.spin==3*Math.PI/2) slonche.center[1]=yStart+movePlanePos;
+					slonche.center[3]=0;
+					jumping=false;
+					xStart=Number(slonche.center[0]);
+					yStart=Number(slonche.center[1]);
+				}
+			}
+		}
+
+		/*function jump()
+		{
+			tJump=1.5;
+			tPassed=0;
+			movePlanePos=3;
+			xStart=slonche.center[0];
+			yStart=slonche.center[1];
+			if(tPassed<tJump)
+			{
+				tPassed+=Suica.dTime;
+				//slonche.center[3]=Math.sin(tPassed*Math.PI/tJump);
+				if(slonche.spin==0) slonche.center[0]+=movePlanePos*tPassed/tJump;
+				if(slonche.spin==Math.PI/2) slonche.center[1]-=movePlanePos*tPassed/tJump;
+				if(slonche.spin==Math.PI) slonche.center[0]-=movePlanePos*tPassed/tJump;
+				if(slonche.spin==3*Math.PI/2) slonche.center[1]+=movePlanePos*tPassed/tJump;
+				var now = Date.now();
+				var end = now + 100;
+				while (now < end) { now = Date.now(); }
+			}
+			/*
+			if(slonche.spin==0) slonche.center[0]=xStart+movePlanePos;
+			if(slonche.spin==Math.PI/2) slonche.center[1]=yStart-movePlanePos;
+			if(slonche.spin==Math.PI) slonche.center[0]=xStart-movePlanePos;
+			if(slonche.spin==3*Math.PI/2) slonche.center[1]=yStart+movePlanePos;
+			slonche.center[3]=0;
+		}*/
+
+	</script>
+</head>
+
+<body onload="main()">
+	<canvas width="598" height="398" style="border: solid 1px Black;"></canvas>
+	<div style="position:relative; top:-396px; left:0.5em;">
+		<button type="button" id="trunk" onclick="trunkActDeact()">Хобот</button>
+		<button type="button" id="forward" onclick="forward()">Напред</button>
+		<button type="button" id="side" onclick="turn()">Настрани</button>
+		<button type="button" id="jump" onclick="jumpStart()">Скок</button>
+		<button type="button" id="flower" onclick="flower()">Цвете</button>
+	</div>
+	<p id="getDT"></p>
+</body>

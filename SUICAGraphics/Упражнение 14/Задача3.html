@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main()
+      {
+        p=new Suica();
+        demo();
+
+        xc=0;
+        yc=5;
+        zc=10;
+
+        Rs1=10;
+        Rs2=3;
+
+
+        coeff=0.5;
+        coeff2=0.2;
+
+        a=random(0, 2*Math.PI);
+        b=random(-Math.PI/2, Math.PI/2);
+
+
+
+        s1=sphere([xc,yc,zc], Rs1).custom({color: [0.1,0.5,1]});
+        s2=sphere([s1.center[0]+(Rs1+Rs2)*Math.cos(a)*Math.cos(b), s1.center[1]+(Rs1+Rs2)*Math.sin(a)*Math.cos(b), s1.center[2]+(Rs1+Rs2)*Math.sin(b)], Rs2).custom({color: [1,0,0]});
+
+
+        p.nextFrame=drawFrame;
+      }
+      function drawFrame()
+      {
+        phi=coeff*Suica.dTime*Math.PI;
+        psi=coeff2*Suica.dTime*Math.PI;
+
+        s2.center=[s1.center[0]+(Rs1+Rs2)*Math.cos(a)*Math.cos(b), s1.center[1]+(Rs1+Rs2)*Math.sin(a)*Math.cos(b), s1.center[2]+(Rs1+Rs2)*Math.sin(b)];
+
+        a+=phi;
+        b+=psi;
+      }
+    </script>
+  </head>
+  <body onload="main()">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

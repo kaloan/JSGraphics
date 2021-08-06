@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(r,n)
+      {
+        p=new Suica();
+        demo();
+        oxyz();
+
+        var yy=random(-5,5);
+        var h=3*r;
+        s=sphere([0,yy+h+r,0],r).custom({color: [0.2,0.8,1]});
+        c=cylinder([0,yy,0],1.1*r,h).custom({hollow: true, focus: [0,1,0], color: [1,1,0.4]});
+        endPoint=c.center.slice();
+        console.log(endPoint);
+        endPoint[1]-=r;
+        console.log(endPoint);
+        v=vectorPoints(endPoint,s.center);
+        t=n;
+        p.nextFrame=drawFrame;
+      }
+      function drawFrame()
+      {
+        //s.center[2]+=v*Suica.dTime;
+        var dist=0;
+        var d=vectorPoints(endPoint,s.center);
+        for(var i=0;i<3;i++)
+        {
+          dist+=d[i]*d[i];
+        }
+        dist=Math.pow(dist,1/2);
+        if(dist>=0.2*s.radius)
+        {
+          for(var i=0;i<3;i++)
+          {
+            s.center[i]+=v[i]*Suica.dTime/t;
+          }
+        }
+      }
+    </script>
+  </head>
+  <body onload="main(5,3)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

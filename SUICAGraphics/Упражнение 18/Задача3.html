@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Упражнение Тест 3, задача 1</title>
+		<script src="suica.min.js"></script>
+		
+		<script>
+			function main()
+			{
+				suic=new Suica();
+
+				orthographic(-1000,1000);
+				lookAt([0,0,100],[0,0,0],[0,1,0]);
+				
+				mD=200;
+				a=point([random(-mD,mD),random(-mD,mD),random(-mD,mD)]).custom({color: [0,0,0], pointSize: 15});
+				b=point([random(-mD,mD),random(-mD,mD),random(-mD,mD)]).custom({color: [0,0,0], pointSize: 15});
+				c=point([random(-mD,mD),random(-mD,mD),random(-mD,mD)]).custom({color: [0,0,0], pointSize: 15});
+				
+				AB=segment(a.center,b.center).custom({color: [0,0,0]});
+				BC=segment(b.center,c.center).custom({color: [0,0,0]});
+				AC=segment(a.center,c.center).custom({color: [0,0,0]});
+				
+				p=point([(a.center[0]+b.center[0])/2,(a.center[1]+b.center[1])/2,(a.center[2]+b.center[2])/2]).custom({interactive: true, pointSize: 15});
+				pSeg=segment(c.center,p.center);
+				
+				suic.gl.canvas.addEventListener('mousedown',mouseDown);
+				suic.gl.canvas.addEventListener('mousemove',mouseMove);
+				suic.gl.canvas.addEventListener('mouseup',mouseUp);
+				obj=null;
+				
+				ABVec=vectorPoints(b,a);
+				k=0.5;
+			}
+			
+			function mouseDown(event)
+			{
+				obj=suic.objectAtPoint(event.clientX,event.clientY);
+			}
+			function mouseMove(event)
+			{
+				if(obj===p)
+				{	
+					x=event.clientX-event.target.offsetLeft-event.target.offsetWidth/2;
+					y=-(event.clientY-event.target.offsetTop-event.target.offsetHeight/2);
+					
+					k=((x-a.center[0])*ABVec[0]+(y-a.center[1])*ABVec[1])/(ABVec[0]*ABVec[0]+ABVec[1]*ABVec[1]);
+					
+					if(k<0) k=0;
+					if(k>1) k=1;
+					
+					obj.center[0]=a.center[0]+k*ABVec[0];
+					obj.center[1]=a.center[1]+k*ABVec[1];
+					
+				}
+			}
+			function mouseUp(event)
+			{
+				obj=null;
+			}
+			
+		</script>
+		
+	</head>
+	<body onload="main()">
+		<canvas width="1300" height="800" style="border: solid black 1px;">Не се поддържа canvas!</canvas>
+		<noscript>Не се поддържа JS!</noscript>
+	</body>
+</html>

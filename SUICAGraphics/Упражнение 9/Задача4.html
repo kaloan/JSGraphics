@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      function euclideanNorm(l)
+      {
+        var ret=0;
+        for(var i=0;i<l.length;i++)
+        {
+          ret+=l[i]*l[i];
+        }
+        ret=Math.sqrt(ret);
+        return ret;
+      }
+      function twoArrDiff(a,b,same=true)
+      {
+        var lenRet=Math.max(a.length,b.length);
+        var ret = new Array(lenRet);
+        var upTo=Math.min(a.length,b.length);
+
+        if(lenRet!=upTo&&same)
+        {
+          throw "Array sizes do not match";
+        }
+
+        for(var i=0;i<upTo;i++)
+        {
+          ret[i]=a[i]-b[i];
+        }
+
+        var c;
+        if(lenRet>=a.length)
+        {
+          c=b;
+        }
+        else
+        {
+          c=a;
+        }
+
+        for(var i=upTo;i<lenRet;i++)
+        {
+          ret[i]=c[i];
+        }
+
+        return ret;
+      }
+      function dotProduct(a,b)
+      {
+        var c=0;
+        var la=a.length;
+        var lb=b.length;
+        if(la==lb)
+        {
+          for(var i=0;i<la;i++)
+          {
+            c+=a[i]*b[i];
+          }
+        }
+        else
+        {
+          throw "Different sizes";
+        }
+        return c;
+      }
+      function main()
+      {
+        xa=document.getElementById('xa').value;
+        ya=document.getElementById('ya').value;
+        za=document.getElementById('za').value;
+        xb=document.getElementById('xb').value;
+        yb=document.getElementById('yb').value;
+        zb=document.getElementById('zb').value;
+        xc=document.getElementById('xc').value;
+        yc=document.getElementById('yc').value;
+        zc=document.getElementById('zc').value;
+
+        var A=[xa, ya, za];
+        var B=[xb, yb, zb];
+        var C=[xc, yc, zc];
+
+        document.getElementById('coords').innerHTML='<b><i>Координати:</b></i> <br>'+'A: ' + A + '<br>B: ' + B + '<br>C: '+ C;
+
+        document.getElementById('norms').innerHTML='<b><i>Норми:</b></i> <br>'+'AB: ' + euclideanNorm(twoArrDiff(B,A)) + '<br>AC: ' + euclideanNorm(twoArrDiff(C,A)) + '<br>BC: '+ euclideanNorm(twoArrDiff(C,B));
+
+        document.getElementById('dotprods').innerHTML='<b><i>Скаларни поизведения:</b></i> <br>'+'AB.AC: ' + dotProduct(twoArrDiff(B,A),twoArrDiff(C,A)) + '<br>CA.CB: ' + dotProduct(twoArrDiff(A,C),twoArrDiff(B,C)) + '<br>BA.BC: '+ dotProduct(twoArrDiff(A,B),twoArrDiff(C,B));
+
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      Въведете координатите на A:
+      <input type="number" id="xa" value="" size="5">
+      <input type="number" id="ya" value="" size="5">
+      <input type="number" id="za" value="" size="5">
+    </p>
+    <p>
+      Въведете координатите на B:
+      <input type="number" id="xb" value="" size="5">
+      <input type="number" id="yb" value="" size="5">
+      <input type="number" id="zb" value="" size="5">
+    </p>
+    <p>
+      Въведете координатите на C:
+      <input type="number" id="xc" value="" size="5">
+      <input type="number" id="yc" value="" size="5">
+      <input type="number" id="zc" value="" size="5">
+    </p>
+    <button type="button" id="sub" onclick="main()" style="width: 100px;height: 60px">
+      Потвърди въвеждането
+    </button>
+    <p id="coords">
+
+    </p>
+    <br>
+    <p id="norms">
+
+    </p>
+    <br>
+    <p id="dotprods">
+
+    </p>
+  </body>
+</html>

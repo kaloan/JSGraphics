@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Задача 1</title>
+    <script src="suica.min.js"></script>
+    <script type="text/javascript">
+      function main(n,x,y,z,a)
+      {
+        new Suica();
+        demo();
+        oxyz();
+
+
+        //Задача 1
+        /*
+        var sq=square([x,y,z],a);
+        sq.mode=Suica.POINT;
+        var sq=square([x+2*a,y,z],a);
+        sq.mode=Suica.LINE;
+        var sq=square([x+4*a,y,z],a);
+        */
+
+        //Задача 2
+        /*
+        ca=a;
+        for(var i=0;i<n;i++)
+        {
+          if(ca>1)
+          {
+            var sq=square([x,y,z],ca);
+            sq.mode=Suica.POINT;
+            sq=square([x+2*a,y,z],ca);
+            sq.mode=Suica.LINE;
+            sq=square([x+4*a,y,z+0.3*ca],ca);
+            sq.color=[Math.random(),Math.random(),Math.random()];
+          }
+
+          ca=0.85*ca;
+        }
+        */
+
+        //Задача 3, 4 и 5
+        /*
+        ca=a;
+        for(var i=0;i<n;i++)
+        {
+          if(ca>1)
+          {
+            var sq=square([x,y,z],ca);
+            sq.mode=Suica.POINT;
+            sq.spin=radians(i*45);
+            sq.focus=[1,0,0];
+            sq=square([x+2*a,y,z],ca);
+            sq.mode=Suica.LINE;
+            sq.spin=radians(i*45);
+            sq.focus=[1,0,0];
+            //sq=square([x+4*a,y,z+0.3*ca],ca);
+            sq=square([x+4*a+0.3*ca,y,z],ca);
+            sq.SOLID;
+            sq.color=[Math.random(),Math.random(),Math.random()];
+            sq.spin=radians(i*45);
+            sq.focus=[1,0,0];
+
+            var sq=rectangle([x,y,z+a],[ca,2*ca]);
+            sq.mode=Suica.POINT;
+            sq.spin=radians(i*45);
+            sq=rectangle([x+2*a,y,z+a],[ca,2*ca]);
+            sq.mode=Suica.LINE;
+            sq.spin=radians(i*45);
+            sq=rectangle([x+4*a,y,z+0.3*ca+a],[ca,2*ca]);
+            sq.mode=Suica.SOLID;
+            sq.color=[Math.random(),Math.random(),Math.random()];
+            sq.spin=radians(i*45);
+
+          }
+
+          ca=ca/Math.sqrt(2);
+        }
+        */
+
+        //Задача 6 - не използваме n
+        var rec=rectangle([x,y,z],[a,2*a]);
+        rec.color=[Math.random(),Math.random(),Math.random()];
+        rec.focus=[1,0,0];
+
+        var rec=rectangle([x,y+a+a/2,z-a/2],[a,2*a]);
+        rec.color=[Math.random(),Math.random(),Math.random()];
+        rec.focus=[1,0,0];
+        rec.spin=Math.PI/2;
+
+        var rec=rectangle([x,y-a/2,z-a/2-a],[a,2*a]);
+        rec.color=[Math.random(),Math.random(),Math.random()];
+        rec.focus=[1,0,0];
+        rec.spin=Math.PI/2;
+
+        var rec=rectangle([x,y+a,z-2*a],[a,2*a]);
+        rec.color=[Math.random(),Math.random(),Math.random()];
+        rec.focus=[1,0,0];
+      }
+    </script>
+  </head>
+  <body onload="main(40,5,-2.5,5,5)">
+    <canvas id="canvas" width="1200" height="600"></canvas>
+  </body>
+</html>

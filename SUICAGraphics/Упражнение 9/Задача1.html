@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      function euclideanNorm(l)
+      {
+        var ret=0;
+        for(var i=0;i<l.length;i++)
+        {
+          ret+=l[i]*l[i];
+        }
+        ret=Math.sqrt(ret);
+        return ret;
+      }
+      function main()
+      {
+        xp=document.getElementById('xp').value;
+        yp=document.getElementById('yp').value;
+        zp=document.getElementById('zp').value;
+        xq=document.getElementById('xq').value;
+        yq=document.getElementById('yq').value;
+        zq=document.getElementById('zq').value;
+        var p=[xp,yp,zp];
+        var q=[xq,yq,zq];
+        console.log('p = ['+p+']');
+        console.log('q = ['+q+']');
+        console.log('||p|| ='+euclideanNorm(p));
+        console.log('||q|| ='+euclideanNorm(q));
+        console.log('||p|| + ||q|| = '+(euclideanNorm(p)+euclideanNorm(q)));
+        console.log('||p|| - ||q|| = '+(euclideanNorm(p)-euclideanNorm(q)));
+        document.getElementById('res1').innerHTML='||p|| + ||q|| = '+(euclideanNorm(p)+euclideanNorm(q));
+        document.getElementById('res2').innerHTML='||p|| - ||q|| = '+(euclideanNorm(p)-euclideanNorm(q));
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      Въведете координатите на p:
+      <input type="number" id="xp" value="" size="5">
+      <input type="number" id="yp" value="" size="5">
+      <input type="number" id="zp" value="" size="5">
+    </p>
+    <p>
+      Въведете координатите на q:
+      <input type="number" id="xq" value="" size="5">
+      <input type="number" id="yq" value="" size="5">
+      <input type="number" id="zq" value="" size="5">
+    </p>
+    <button type="button" id="sub" onclick="main()">
+      Изчисли
+    </button>
+    <p id="res1">
+
+    </p>
+    <p id="res2">
+
+    </p>
+  </body>
+</html>
