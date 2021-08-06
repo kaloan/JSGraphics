@@ -1,0 +1,299 @@
+﻿<!DOCTYPE html>
+
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+	
+	<body>
+		<h1>"Ave Avgvsti!"</h1>
+
+		<script>
+			// нагласяване на цвета и центрирането на текста с имената ви
+			document.getElementsByTagName('h1')[0].style = 'color:white; text-align:center; font-size:1.75em';
+			
+			// рисувателно поле на цял екран
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+			
+			// сцена и камера
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(10,3,190);
+			
+			// светлини
+			var light = new THREE.DirectionalLight('lightblue',0.8);
+			light.position.set(0,1,4);
+			scene.add(light);
+			scene.add( new THREE.AmbientLight('white',0.4) );
+			
+			//Трон
+			//Основа+стъпала
+			var geometry = new THREE.BoxGeometry( 46, 8, 60 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(40,-18,75);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			
+			var geometry = new THREE.BoxGeometry( 13.5, 4, 22 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(30,-13,63);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			
+			//Седалка
+			var geometry = new THREE.BoxGeometry( 25, 16, 22 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(40,-7,75);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			//Гръб
+			var geometry = new THREE.BoxGeometry( 5, 59, 31 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(47,8,85);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			//Лява облегалка
+			var geometry = new THREE.BoxGeometry( 26, 27.1, 4 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(29,-3,82);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			//Дясна облегалка
+			var geometry = new THREE.BoxGeometry( 26, 27.1, 4 );
+			var material = new THREE.MeshPhongMaterial({color:0xFFBF00});
+			var cube = new THREE.Mesh( geometry, material );
+			cube.position.set(51,-3,68);
+			cube.rotateY(0.7*Math.PI);
+			scene.add( cube );
+			
+			// функция за анимиране на сцената
+			var t = 0; // време
+			var p=0; //време за патриция
+			var startEmperor=false;
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				scene.rotateY(0.008);
+				if (animate) animate(t);
+				if(startEmperor)
+				{
+					if(conquer) 
+					{
+						conquer(p);
+						p++;
+					}
+				}
+				if(t==265) startEmperor=true;
+				t++;
+				if(t==599) t=0;
+				renderer.render( scene, camera );
+			}			
+			
+			// човече
+			манекен = мъжествен();
+			emperor = мъжествен();
+			// тук се описват статичните елементи на позата
+			//Pleb
+			манекен.таз.position.set(0,0,0);
+			манекен.rotateY(1.7*Math.PI);
+			манекен.д_ръка.rotateZ(-0.08);
+			манекен.л_ръка.rotateZ(-0.08);
+			манекен.д_ръка.rotateX(0.07);
+			манекен.л_ръка.rotateX(-0.07);
+			
+			//Август
+			//Императора седи
+			emperor.position.set(39,6,75);
+			//emperor.таз.position.set(-83,6,-14);
+			emperor.л_коляно.rotateZ(1.5);
+			emperor.л_крак.rotateZ(-1.5);
+			emperor.д_коляно.rotateZ(1.5);
+			emperor.д_крак.rotateZ(-1.5);
+			emperor.rotateY(0.7*Math.PI);
+			//С ръка подпира глава
+			emperor.д_ръка.rotateY(0.5);
+			emperor.д_ръка.rotateZ(-1);
+			emperor.д_ръка.rotateX(-0.1);
+			emperor.д_лакът.rotateX(0);
+			emperor.д_лакът.rotateZ(-2.7);
+			emperor.д_лакът.rotateY(0.5);
+			emperor.д_китка.rotateY(1);
+			emperor.д_китка.rotateX(0);
+			emperor.д_китка.rotateZ(0.2);
+			emperor.тяло.rotateZ(-0.4);
+			emperor.тяло.rotateX(0.4);
+			emperor.глава.rotateX(0.8);
+			//А другата на трона
+			emperor.л_лакът.rotateX(-1);
+			emperor.л_лакът.rotateZ(-0.4);
+			emperor.л_лакът.rotateY(0.5);
+			emperor.л_ръка.rotateX(0.7);
+			emperor.л_ръка.rotateZ(-0.3);
+			emperor.л_китка.rotateX(1);
+			emperor.л_китка.rotateZ(-0.4);
+			emperor.л_китка.rotateY(2);
+			var lastBody=new THREE.Vector3(0,0,0);
+			// анимация на човечето
+			animate = function (t) //Анимация плебей
+			{
+				// тук се описват динамичните елементи на позата
+				// като променливата t е номер на кадър, като се
+				// очаква 1 секунда да е приблизително 60 кадъра
+				//манекен.врат.врът(10*sin(5*t)-5,0,10*sin(5*t)-5);
+				//манекен.глава.врът(0,0,10*sin(5*t)-5);
+				var T=0.0001*t;
+				var temp=0.0001*(t-220);
+				var lT=0.0001*(t-340);
+				//Дишане
+				//манекен.тяло.врът(6*sin(0.4*t),0,6*sin(0.4*t));
+				if(t==0) манекен.таз.getWorldPosition(lastBody);
+				if(t<80){
+					var x=lastBody.getComponent(0);
+					var y=lastBody.getComponent(1);
+					var z=lastBody.getComponent(2);
+					//Л крак се сгъва
+					манекен.л_крак.rotateZ(-5*T);
+					манекен.л_коляно.rotateZ(5*T);
+					//Снижаване+десен крак се сгъва
+					манекен.таз.position.set(x,y-0.1*t,z+0.05*t);
+					манекен.тяло.rotateZ(0.02*T*t);
+					манекен.д_коляно.rotateZ(6*T);
+					//Д ръка
+					манекен.д_ръка.rotateY(6*T);
+					манекен.д_ръка.rotateZ(-6*T);
+					манекен.д_лакът.rotateX(5*T);
+					манекен.д_лакът.rotateZ(-1*T);
+					//Л ръка
+					манекен.л_ръка.rotateY(-6*T);
+					манекен.л_ръка.rotateZ(-6*T);
+					манекен.л_лакът.rotateX(-5*T);
+					манекен.л_лакът.rotateZ(-1*T);
+				}
+				else if(t>=80&&t<120)
+				{
+					//Д ръка поздрав
+					манекен.д_лакът.rotateX(-1.4*T);
+					манекен.д_китка.rotateY(2.7*T);
+					//Л ръка поздрав
+					манекен.л_лакът.rotateX(+1.4*T);
+					манекен.л_китка.rotateY(-2.7*T);
+				}
+				else if(t>=120&&t<300)
+				{
+					манекен.таз.getWorldPosition(lastBody);
+				}
+				else if(t>=300&&t<340)
+				{
+					//Д ръка поздрав обратно
+					манекен.д_лакът.rotateX(1.4*temp);
+					манекен.д_китка.rotateY(-2.5*temp);
+					//Л ръка поздрав обратно
+					манекен.л_лакът.rotateX(-1.4*temp);
+					манекен.л_китка.rotateY(2.5*temp);
+					манекен.таз.getWorldPosition(lastBody);
+				}
+				else if(t<420)
+				{
+					var x=lastBody.getComponent(0);
+					var y=lastBody.getComponent(1);
+					var z=lastBody.getComponent(2);
+					//Л крак се разгъва
+					манекен.л_крак.rotateZ(5*lT);
+					манекен.л_коляно.rotateZ(-5*lT);
+					//манекен.д_глезен.rotateZ(-0.0005*t);
+					//Ставане+десен крак се разгъва
+					манекен.таз.position.set(x,y+0.1*(t-340),z-0.05*(t-340));
+					манекен.тяло.rotateZ(-0.02*lT*(t-340));
+					манекен.д_коляно.rotateZ(-6*lT);
+					//Д ръка прибира
+					манекен.д_ръка.rotateY(-6*lT);
+					манекен.д_ръка.rotateZ(6*lT);
+					манекен.д_лакът.rotateX(-5*lT);
+					манекен.д_лакът.rotateZ(lT);
+					//Л ръка прибира
+					манекен.л_ръка.rotateY(6*lT);
+					манекен.л_ръка.rotateZ(6*lT);
+					манекен.л_лакът.rotateX(5*lT);
+					манекен.л_лакът.rotateZ(lT);
+				}
+				else 
+				{
+					манекен.врат.врът(-18*Math.abs(sin(1.3*t))-5,0,-18*Math.abs(sin(1.3*t))-5);
+				}
+			}
+			conquer = function(t) //Анимация император
+			{
+				var T=0.0001*t;
+				if(t<140)
+				{
+					//Ставане
+					if(t<70)
+					{
+						emperor.л_коляно.rotateZ(-2.1*T);
+						emperor.л_крак.rotateZ(+2.1*T);
+						emperor.д_коляно.rotateZ(-2.1*T);
+						emperor.д_крак.rotateZ(+2.1*T);
+					}
+					else
+					{
+						emperor.л_коляно.rotateZ(-0.1*T);
+						emperor.л_крак.rotateZ(+0.7*T);
+						emperor.д_коляно.rotateZ(-1.1*T);
+						emperor.д_крак.rotateZ(+1.1*T);
+					}
+					
+					emperor.тяло.rotateZ(+0.45*T);
+					emperor.тяло.rotateX(-0.45*T);
+					emperor.тяло.rotateY(-0.1*T);
+					emperor.position.set(39-0.09*t,6+0.1*t,75-0.09*t);
+					
+					//Свиване на ляво коляно+глезен
+					emperor.л_коляно.rotateX(-0.1*T);
+					//emperor.л_коляно.rotateY(+1*T);
+					emperor.л_глезен.rotateX(+0.9*T);
+					emperor.л_глезен.rotateY(-0.4*T);
+					emperor.л_глезен.rotateZ(+0.9*T);
+					
+					//Оправяне на глава
+					emperor.глава.rotateX(-0.7*T);
+					emperor.глава.rotateY(-0.25*T);
+					
+					//Оправяне на лява ръка
+					emperor.л_китка.rotateX(0.1*T);
+					emperor.л_китка.rotateZ(-1.1*T);
+					emperor.л_китка.rotateY(-0.65*T);
+					emperor.л_ръка.rotateX(-0.38*T);
+					emperor.л_ръка.rotateZ(1.33*T);
+					emperor.л_лакът.rotateX(0.1*T);
+					emperor.л_лакът.rotateZ(-0.8*T);
+					
+					//Оправяне на дясна ръка
+					emperor.д_ръка.rotateZ(-0.18*T);
+					emperor.д_ръка.rotateX(0.05*T);
+					emperor.д_лакът.rotateX(-0.7*T);
+					emperor.д_лакът.rotateZ(2*T);
+					emperor.д_лакът.rotateY(-0.4*T);
+					emperor.д_китка.rotateY(+0.6*T);
+					emperor.д_китка.rotateX(-0.1*T);
+					emperor.д_китка.rotateZ(-0.15*T);
+				}
+				if(t>200)
+				{
+					emperor.тяло.rotateY(-0.005*sin(t));
+					emperor.глава.rotateX(-0.001*sin(t));
+					emperor.глава.rotateY(-0.01*sin(t));
+				}
+			}
+			drawFrame();
+		</script>
+	</body>
+</html>
